@@ -113,7 +113,7 @@ async def final_send_all_message(message:types.Message,state: FSMContext): #ма
 
 async def start_excel(message:types.Message,state:FSMContext):
     if admin_key== str(message.chat.id) or admin_key2== str(message.chat.id):
-        await message.answer_document(open('cgf\shablon.xlsx', 'rb'))
+        await message.answer_document(open('cgf/shablon.xlsx', 'rb'))
         await message.answer('Вы можете добавить время с датами через EXCEL файл \n'
                              'Шаблон для заполнения данных <b>выше</b>⬆⬆⬆\n'
                              'Чтобы продолжить,<b> отправьте заполненный шаблон </b> в ответном сообщении или нажмите /admin\n'
@@ -125,8 +125,8 @@ async def take_excel(message: types.Message):  # загрузка excel файл
         result = await k.take_users_id()
         print("downloading document")
         #destination = r"cgf\file1.xlsx"
-        await message.document.download(destination_file = r"cgf\file1.xlsx")
-        book = openpyxl.load_workbook(r"cgf\file1.xlsx", read_only=True)
+        await message.document.download(destination_file = r"cgf/file1.xlsx")
+        book = openpyxl.load_workbook(r"cgf/file1.xlsx", read_only=True)
         sheet = book.active  # активирует листы
         if sheet[1][0].value=='Даты':
             await message.answer('Файл загружен, начинаю обработку:')
@@ -168,7 +168,7 @@ async def zapis_iz_excel(message): #метод чтения данных из е
 
 async def zapis_razdelov_uslug(message: types.Message):
     if admin_key== str(message.chat.id) or admin_key2== str(message.chat.id):
-        await message.answer_document(open('cgf\shablon.xlsx', 'rb'))
+        await message.answer_document(open('cgf/shablon.xlsx', 'rb'))
         await message.answer('Вы можете добавить разделы и услуги через EXCEL файл \n'
                              'Шаблон для заполнения данных <b>выше</b>⬆⬆⬆\n'
                              'Чтобы продолжить,<b> отправьте заполненный шаблон </b> в ответном сообщении или нажмите /admin\n'
@@ -181,8 +181,8 @@ async def take_excel_uslugi(message: types.Message):  # загрузка excel �
         result = await k.take_users_id()
         print("downloading document")
         #destination = r"cgf\file1.xlsx"
-        await message.document.download(destination_file = r"cgf\file1.xlsx")
-        book = openpyxl.load_workbook(r"cgf\file1.xlsx", read_only=True)
+        await message.document.download(destination_file = r"cgf/file1.xlsx")
+        book = openpyxl.load_workbook(r"cgf/file1.xlsx", read_only=True)
         sheet = book.active  # активирует листы
         if sheet[1][0].value=='Даты':
             await message.answer('Файл загружен, начинаю обработку:')
@@ -222,7 +222,7 @@ async def zapis_iz_excel_uslugi(message): #метод чтения данных 
 
 async def all_excel(message: types.Message): #запись под ключ всего файла из екселя сразу
     if admin_key== str(message.chat.id) or admin_key2== str(message.chat.id):
-        await message.answer_document(open('cgf\shablon.xlsx', 'rb'))
+        await message.answer_document(open('cgf/shablon.xlsx', 'rb'))
         await message.answer('Вы можете за<b> один раз </b> загрузить все данные через EXCEL файл \n'
                              'Шаблон для заполнения данных <b>выше</b>⬆⬆⬆\n'
                              'Чтобы продолжить,<b> отправьте заполненный шаблон </b> в ответном сообщении или нажмите /admin\n'
@@ -234,8 +234,8 @@ async def all_excel_final(message:types.Message):
     try:
         result = await k.take_users_id()
         print("downloading document")
-        await message.document.download(destination_file=r"cgf\file1.xlsx")
-        book = openpyxl.load_workbook(r"cgf\file1.xlsx", read_only=True)
+        await message.document.download(destination_file=r"cgf/file1.xlsx")
+        book = openpyxl.load_workbook(r"cgf/file1.xlsx", read_only=True)
         sheet = book.active  # активирует листы
         if sheet[1][0].value == 'Даты':
             await message.answer('Файл загружен, начинаю обработку:')

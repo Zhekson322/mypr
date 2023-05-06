@@ -7,6 +7,7 @@ from adminss.admin import *
 from adminss.admin_editor import *
 
 
+
 async def on_startup(_):
     await sqlite.db_start()
     await register_hnd()

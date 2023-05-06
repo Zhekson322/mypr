@@ -290,6 +290,10 @@ async def keksik(callback:types.CallbackQuery,state: FSMContext): #назад п
 
 async def on_start_restart(message:types.Message,state: FSMContext): #здесь мы передали вторым аргументом для записи пользователя в память
     try:
+        await state.finish()
+    except:
+        print('Состояние отсутствует')
+    try:
         await k.delete_starie()
         print('Старые записи удалены')
         await message.delete()

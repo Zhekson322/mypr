@@ -1,19 +1,21 @@
 from aiogram import Bot, Dispatcher,executor
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 import os #взаимодействие с файловой системой
 from aiogram.contrib.fsm_storage.memory import MemoryStorage #инициализировали память
 from aiogram.dispatcher.filters.state import StatesGroup, State
 from aiogram.dispatcher import FSMContext
 
-
+TOKEN_API='6186474662:AAFLh4_WqS9PZ_ACVaFC-YsGmD4Mg-ruEe8'
+admin_id='2104414456'
+admin_id2='2104414456'
 
 TOKEN_API='6186474662:AAFLh4_WqS9PZ_ACVaFC-YsGmD4Mg-ruEe8'
 storage = MemoryStorage()  # память для
 
-load_dotenv('.env')
-token = os.getenv("TOKEN_API")
-admin_key=os.getenv("admin_id")
-admin_key2=os.getenv("admin_id2")
+#load_dotenv('.env')
+token = TOKEN_API
+admin_key=admin_id
+admin_key2=admin_id2
 bot = Bot(token)
 dp = Dispatcher(bot, storage=MemoryStorage())  # создаем объект диспетчер для работы с ботом и класс состояний
 

@@ -1,7 +1,10 @@
-FROM python:3.10
-WORKDIR /app
-COPU requirements.txt
-RUN pip install -upgrade setuptools
-RUN pip install -r requirements.txt
-RUN chmod 755 .
-COPY . .
+FROM python:3
+
+WORKDIR /bot
+
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . /bot
+
+CMD [ "python", "main.py" ]

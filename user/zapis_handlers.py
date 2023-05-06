@@ -173,6 +173,7 @@ async def get_name(message: types.Message, state: FSMContext):
     markup = InlineKeyboardMarkup().add(types.InlineKeyboardButton('Отменить запись',callback_data='nazad'))
     result = await state.get_data()
     try:
+        await state.update_data(name_user=message.text)
         kek = await k.get_phone(result['chat_id'])
         await state.update_data(phone=kek)
         if kek!='Null':
@@ -190,7 +191,7 @@ async def get_name(message: types.Message, state: FSMContext):
     await state.update_data(id_user=message.chat.id)
     result = await state.get_data()#получаем значения состояния машины из памяти
     await k.user_name(result['name_user'],result['id_user'])
-    await message.answer(f'Вы указали имя <b>{result["name_user"]}</b>\n'
+    await message.answer(f'Вы указали имя: <b>{result["name_user"]}</b>\n'
                                   f'<b>Теперь укажите номер телефона для связи с вами:</b>',reply_markup=markup,parse_mode=types.ParseMode.HTML)
     await UserState.next()
 
@@ -210,7 +211,7 @@ async def get_name_c(callback:types.CallbackQuery,state: FSMContext): #колб�
         print('Номер телефона не найден')
 
     await k.user_name(result['name_user'], result['id_user'])
-    await callback.message.answer(f'Вы указали имя <b>{result["name_user"]}</b>\n'
+    await callback.message.answer(f'Вы указали имя: <b>{result["name_user"]}</b>\n'
                          f'<b>Теперь укажите номер телефона для связи с вами:</b>', reply_markup=markup,
                          parse_mode=types.ParseMode.HTML)
     await UserState.next()

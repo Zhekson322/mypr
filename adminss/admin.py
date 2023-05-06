@@ -12,7 +12,6 @@ def start_ikb(): #кнопки стартового меню админки
     markup=ReplyKeyboardMarkup(resize_keyboard=True)
     markup.add(KeyboardButton('Показать все доступные записи'))
     markup.add(KeyboardButton('Показать всех записанных клиентов'))
-    markup.add(KeyboardButton('Показать все доступные разделы и услуги'))
     markup.add(KeyboardButton('/admin Перезапустить администратора'))
     return markup
 

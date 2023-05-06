@@ -96,7 +96,13 @@ async def update_phone(user_phone,user_id):
     kek=cur.execute('UPDATE user SET phone_user=(?) WHERE user_id=(?)',(user_phone,user_id))
     db.commit()
     return all_uslug
-
+async def update_name(user_name,user_id):
+    all_uslug=cur.execute('UPDATE time_uslugi SET user_name=(?) WHERE user_id=(?)',(user_name,user_id))
+    db.commit()
+    print('Обновилось первое')
+    kek=cur.execute('UPDATE user SET last_name=(?) WHERE user_id=(?)',(user_name,user_id))
+    db.commit()
+    return all_uslug
 async def user_name(user_phone,user_id):
     all_uslug=cur.execute('UPDATE user SET last_name=(?) WHERE user_id=(?)',(user_phone,user_id))
     db.commit()

@@ -33,6 +33,7 @@ class UserSpisok(StatesGroup):
     vibor=State()
     edit=State()
     phone=State()
+    name=State()
 
 class Adminka(StatesGroup):
     proverka=State() #состояние проверки рассылки текста

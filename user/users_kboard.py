@@ -14,7 +14,8 @@ def myzapis_ikb(data):#клавиатура для записанных услу
     markup = InlineKeyboardMarkup() # создаём клавиатуру
     for i in data: # цикл для создания кнопок
         markup.add(InlineKeyboardButton(f'{i[3]}: {i[1]} {i[2]}', callback_data=dinam.new(i[0]))) #Создаём кнопки, i[1] - название, i[2] - каллбек дата
-    markup.add(InlineKeyboardButton('📞Изменить номер телефона📞', callback_data=dinam.new('editphone')))
+    markup.add(InlineKeyboardButton('📞Изменить номер📞', callback_data=dinam.new('editphone')))
+    markup.insert(InlineKeyboardButton('🎭Изменить имя🎭', callback_data=dinam.new('editname')))
     markup.add(InlineKeyboardButton('Назад🏃', callback_data=dinam.new('nazad')))
     return markup #возвращаем клавиатуру
 

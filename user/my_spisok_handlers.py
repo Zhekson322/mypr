@@ -16,8 +16,9 @@ async def see_spisok(callback:types.CallbackQuery):
         await callback.answer("🤷‍♀️🤷‍♀️🤷‍♀ Вы еще не записаны 🤷‍♀️🤷‍♀️🤷‍♀️", show_alert=True)
     else:
         await callback.message.delete()
-        Text= f'Номер телефона:<b> {result[0][6]} </b> \n' \
-              f'Ваши записи:'
+        Text=f'Ваше имя:<b> {result[0][5]} </b> \n' \
+             f'Номер телефона:<b> {result[0][6]} </b> \n' \
+             f'Ваши записи:'
         await callback.message.answer(Text,parse_mode=types.ParseMode.HTML,reply_markup=myzapis_ikb(result))
         await UserSpisok.vibor.set()
 
@@ -32,6 +33,10 @@ async def take_callback_spisok_handler(callback:types.CallbackQuery,callback_dat
         print('смена номера телефона')
         await callback.message.answer('Укажите новый номер телефона:',reply_markup=markup)
         await UserSpisok.phone.set()
+    elif callback_data['action']=='editname':
+        print('смена имени')
+        await callback.message.answer('Напишите ваше имя:',reply_markup=markup)
+        await UserSpisok.name.set()
     else:
         #await callback.message.delete()
         print(callback_data['action'])
@@ -66,15 +71,28 @@ async def perezapis_spisok_handler(callback:types.CallbackQuery,callback_data: d
         await see_spisok(callback)
 
 async def edit_phone_number(message:types.Message,state: FSMContext):
-    await bot.delete_message(message.chat.id,message.message_id-1) #удаляет "введите номер телефона"
+    try:
+        await bot.delete_message(message.chat.id,message.message_id-1) #удаляет "введите номер телефона"
+    except:
+        print('Не удалось')
     await k.update_phone(message.text,message.chat.id) #выполняется запрос
     print('Выполнено')
     await state.finish()
     await on_start(message)
 
+async def edit_name_(message:types.Message,state: FSMContext):
+    try:
+        await bot.delete_message(message.chat.id,message.message_id-1) #удаляет "введите номер телефона"
+    except:
+        print('Не удалось')
+    await k.update_name(message.text,message.chat.id) #выполняется запрос
+    print('Выполнено')
+    await state.finish()
+    await on_start(message)
 
 def register_spisok_handlers(dp:Dispatcher) -> None:
     dp.register_callback_query_handler(see_spisok,text='push4') #выбор из услуг
     dp.register_callback_query_handler(take_callback_spisok_handler,myzapis.filter(),state=UserSpisok.vibor)
     dp.register_callback_query_handler(perezapis_spisok_handler,myzapis_edit.filter(),state=UserSpisok.edit)
     dp.register_message_handler(edit_phone_number,state=UserSpisok.phone)
+    dp.register_message_handler(edit_name_,state=UserSpisok.name)

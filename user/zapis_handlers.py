@@ -32,11 +32,14 @@ async def on_start(message:types.Message): #здесь мы передали в�
 
 #выбор услуг
 async def btn_zapis(callback:types.CallbackQuery):
+    try:
        await callback.message.delete()
-       count=await k.db_uslugi() #получил результат метода sql запроса выборка
-       await callback.message.answer(f'Выберите,что вас интересует:',reply_markup=genmarkup(count))
-       await UserState.vibor.set() #переход в состояние календапя
-       #здесь добавить состояние переход
+    except:
+        print('Не получилось удалить код 31')
+    count=await k.db_uslugi() #получил результат метода sql запроса выборка
+    await callback.message.answer(f'Выберите,что вас интересует:',reply_markup=genmarkup(count))
+    await UserState.vibor.set() #переход в состояние календапя
+    #здесь добавить состояние переход
 
 
 
@@ -239,10 +242,10 @@ async def vvod_phone_c(callback:types.CallbackQuery,state: FSMContext): #кол�
     markup1 = InlineKeyboardMarkup().add(types.InlineKeyboardButton('Написать клиенту', url=ur))
 
     await bot.send_message("2104414456", f'Появилась новая запись на <b>{result["usluga"]}</b>.\n'
-                                         f'Дата: {result["time_date"]} \n'
-                                         f'Время: {result["t_zapis"]} \n'
-                                         f'Имя:{result["name_user"]}\n'
-                                         f'Номер: {result["phone"]} \n',parse_mode=types.ParseMode.HTML,
+                                         f'Дата: <b>{result["time_date"]}</b> \n'
+                                         f'Время:<b> {result["t_zapis"]}</b> \n'
+                                         f'Имя:{result["name_user"]}\n </b>'
+                                         f'Номер:<b>{result["phone"]} \n</b>',parse_mode=types.ParseMode.HTML,
                            reply_markup=markup1)
 
     await state.finish()
@@ -265,7 +268,7 @@ async def vvod_phone(message:types.Message,state: FSMContext):
         await k.update_phone(result['phone'],result['id_user'])
         await k.zapis_final(result['id_user'],result['name_user'],result['phone'],result['time_date'],result['t_zapis'],result['usluga'])
         await message.answer(f'Вы записались на <b>{result["usluga"]}</b>.\n'
-                                      f'Ваше имя: {result["name_user"]}'
+                                      f'Ваше имя: {result["name_user"]}\n'
                                       f'Дата: {result["time_date"]} \n'
                                       f'Время: {result["t_zapis"]} \n'
                                       f'Ваш номер:: {result["phone"]} \n'

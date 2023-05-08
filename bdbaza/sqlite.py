@@ -222,3 +222,7 @@ async def get_opisanie():
 async def infa(opis):
     all_uslug=cur.execute('UPDATE config SET photo=(?) WHERE information="1"',(opis,))
     db.commit()
+
+async def get_baza(): #получить все услуги
+    all_uslug=cur.execute("SELECT * FROM user").fetchall()
+    return all_uslug

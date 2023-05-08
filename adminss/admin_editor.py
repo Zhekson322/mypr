@@ -28,9 +28,11 @@ async def take_location(message:types.Message):
         await message.answer(keksik,parse_mode=types.ParseMode.HTML,disable_web_page_preview=True)
         await message.answer('ВАШ СТАРЫЙ ТЕКСТ \n'
                              f'{result}')
+        await Admin_Editor.start.set()
 
-async def final_menu(message:types.Message):
+async def final_menu(message:types.Message,state:FSMContext):
     if admin_key== str(message.chat.id) or admin_key2== str(message.chat.id):
+        await state.finish()
         await k.give_location(message.text)
         await message.answer('Проверьте результат командой /start')
 #########################изменение информации#############################
@@ -42,17 +44,25 @@ async def inf_btn(message:types.Message):
                              f'{keksik}')
         await message.answer(keksik,parse_mode=types.ParseMode.HTML,disable_web_page_preview=True)
         await message.answer('Отправьте ваш текст:')
-        await Admin_Editor.start.set()
+        await Admin_Editor.edit.set()
 
 async def final_inf(message:types.Message,state:FSMContext):
     await state.finish()
     await k.infa(message.text)
     await message.answer('Проверьте результат можно через кнопку из главного меню /start')
 
+async def admindop(message:types.Message):
+    Text=''
+    result = await k.get_baza()
+    for i in result:
+        Text+=f'{i} \n'
+    await message.answer(Text)
+
+
 def register_admin_editor_handler(dp: Dispatcher) -> None:  # функция регистрации в дальнейшем передадим ее в мейн, и здесь
     dp.register_message_handler(edit_location,text='Настройка стартового меню')
     dp.register_message_handler(take_location,content_types=['photo','rb'])
     dp.register_message_handler(inf_btn,text='Настройка кнопки "Информация"')
-    dp.register_message_handler(final_menu,content_types=['text'])
-
-    dp.register_message_handler(final_inf,content_types=['text'],state=Admin_Editor.start)
+    dp.register_message_handler(final_menu,content_types=['text'],state=Admin_Editor.start)
+    dp.register_message_handler(final_inf,content_types=['text'],state=Admin_Editor.edit)
+    dp.register_message_handler(admindop,commands=['getbaza']) #старт

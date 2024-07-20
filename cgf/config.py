@@ -5,11 +5,11 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage #инициализ
 from aiogram.dispatcher.filters.state import StatesGroup, State
 from aiogram.dispatcher import FSMContext
 
-TOKEN_API='6186474662:AAFLh4_WqS9PZ_ACVaFC-YsGmD4Mg-ruEe8'
+TOKEN_API=''
 admin_id='2104414456'
 admin_id2='2104414456'
 
-TOKEN_API='6186474662:AAFLh4_WqS9PZ_ACVaFC-YsGmD4Mg-ruEe8'
+TOKEN_API=''
 storage = MemoryStorage()  # память для
 
 #load_dotenv('.env')
